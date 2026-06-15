@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ألفا إكس جيمنج سنتر | أقوى سنتر جيمنج وحجوزات أجهزة احترافية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #030712;
+            --card-bg: #091124;
+            --neon-cyan: #00f2fe;
+            --neon-green: #00ff66;
+            --neon-blue: #0066ff;
+            --neon-pink: #ff007f;
+            --text-color: #ffffff;
+            --muted-text: #64748b;
+            --border-color: rgba(0, 242, 254, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: radial-gradient(circle at 50% 0%, #0b1528 0%, transparent 75%);
+        }
+
+        /* شاشة الحظر الكامل من الموقع */
+        #fullSiteBanScreen {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000; color: #ff0055; z-index: 99999; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; font-size: 2rem; font-weight: bold; text-align: center;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        /* الشريط العلوي - تم حذف زر الإدارة منه */
+        .header-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 20px; margin-bottom: 20px;
+        }
+        .nav-links {
+            display: flex; gap: 15px; background: rgba(9, 17, 36, 0.7);
+            padding: 8px 20px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-links span { color: var(--muted-text); cursor: pointer; font-size: 0.9rem; transition: 0.3s; padding: 4px 12px; }
+        .nav-links span.active { color: var(--neon-cyan); background: rgba(0, 242, 254, 0.1); border-radius: 20px; font-weight: bold; }
+        
+        .top-left-btns { display: flex; gap: 10px; align-items: center; }
+        .btn-top { background: transparent; border: 1px solid var(--neon-cyan); color: #fff; padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; }
+        .color-dots { display: flex; gap: 8px; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; cursor: pointer; }
+
+        /* الهيدر الرئيسي والشعار */
+        .main-header { text-align: center; margin-bottom: 40px; padding-top: 10px; }
+        .wolf-logo { width: 70px; height: 70px; margin-bottom: 15px; filter: drop-shadow(0 0 15px var(--neon-cyan)); }
+        .main-header h1 { font-size: 2.2rem; color: #fff; letter-spacing: 1px; margin-bottom: 8px; font-weight: bold; }
+        .main-header p { color: var(--muted-text); font-size: 0.95rem; }
+
+        /* النماذج جنبًا إلى جنب */
+        .forms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 40px; }
+        .section-title { font-size: 1.1rem; color: #fff; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; border-right: 3px solid var(--neon-cyan); padding-right: 10px; }
+        
+        .form-box { background: rgba(9, 17, 36, 0.6); border: 1px solid var(--border-color); border-radius: 12px; padding: 25px; box-shadow: 0 4px 25px rgba(0,0,0,0.3); position: relative; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+        .form-group label { font-size: 0.85rem; color: var(--text-color); }
+        .form-group input, .form-group select, .form-group textarea {
+            background: #040814; border: 1px solid rgba(255,255,255,0.08); color: #fff; padding: 12px; border-radius: 6px; outline: none; font-size: 0.9rem; text-align: right;
+        }
+        .form-group textarea { resize: none; height: 90px; }
+
+        /* بوكس تنبيه الكاش */
+        .cash-only-notice {
+            background: rgba(255, 215, 0, 0.1); border: 1px dashed #ffd700; color: #ffd700;
+            padding: 12px; border-radius: 6px; text-align: center; font-size: 0.9rem; font-weight: bold; margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .btn-submit-booking, .btn-submit-support { background: var(--neon-cyan); color: #000; border: none; padding: 14px; border-radius: 6px; font-weight: bold; width: 100%; cursor: pointer; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+        /* مواصفات الأجهزة */
+        .section-header-row { border-right: 4px solid var(--neon-cyan); padding-right: 12px; margin-bottom: 20px; margin-top: 20px; }
+        .section-header-row h2 { font-size: 1.3rem; color: #fff; display: flex; align-items: center; gap: 10px; }
+
+        .specs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+        .spec-card { background: rgba(9, 17, 36, 0.5); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 20px; }
+        .spec-card-title { font-weight: bold; color: var(--neon-cyan); text-align: center; margin-bottom: 15px; font-size: 1.05rem; }
+        .spec-item { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 6px; }
+        .spec-label { color: var(--muted-text); }
+        .spec-value { color: #fff; font-weight: 500; }
+
+        /* صندوق الألعاب */
+        .games-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+        .game-card { background: rgba(9, 17, 36, 0.5); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 15px; display: flex; align-items: center; justify-content: space-between; }
+        .game-title { font-weight: bold; color: #fff; font-size: 0.95rem; }
+        .game-desc { color: var(--muted-text); font-size: 0.8rem; }
+
+        /* شات الدعم */
+        .chat-container {
+            background: rgba(9, 17, 36, 0.85); border: 1px solid var(--neon-cyan); border-radius: 12px; padding: 20px; margin-top: 20px;
+        }
+        .chat-messages {
+            height: 180px; overflow-y: auto; background: #040814; border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 15px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;
+        }
+        .msg-line { padding: 8px 12px; border-radius: 6px; max-width: 75%; font-size: 0.9rem; line-height: 1.4; }
+        .msg-client { background: var(--neon-cyan); color: #000; align-self: flex-start; }
+        .msg-admin { background: rgba(255, 255, 255, 0.1); color: #fff; align-self: flex-end; }
+        
+        .chat-input-row { display: flex; gap: 10px; }
+        .chat-input-row input { flex-grow: 1; background: #040814; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 12px; border-radius: 6px; outline: none; }
+        .chat-input-row button { background: var(--neon-cyan); color: #000; border: none; padding: 0 25px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+
+        /* إشعارات */
+        .notification-box {
+            display: none; background: rgba(255, 0, 127, 0.15); border: 1px solid var(--neon-pink); color: #fff; padding: 15px; border-radius: 8px; margin-bottom: 25px; text-align: center; font-weight: bold;
+        }
+        .accept-box {
+            display: none; background: rgba(0, 255, 102, 0.15); border: 1px solid var(--neon-green); color: #fff; padding: 15px; border-radius: 8px; margin-bottom: 25px; text-align: center; font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- واجهة الحظر الكامل المباشرة -->
+    <div id="fullSiteBanScreen">
+        <i class="fa-solid fa-triangle-exclamation" style="font-size: 4rem; margin-bottom: 20px;"></i>
+        <div>عذراً، لقد تم حظرك من دخول الموقع الإلكتروني بقرار من إدارة السنتر!</div>
+    </div>
+
+    <div class="container" id="mainSiteContent">
+        <!-- بوكس إشعار القبول الأخضر المباشر -->
+        <div class="accept-box" id="approveAlert">
+            <i class="fa-solid fa-circle-check" style="color: var(--neon-green);"></i> تهانينا! تم قبول طلب حجزك بنجاح من قبل إدارة السنتر، يرجى الحضور في الموعد. <span id="approvedHoursDetail" style="color: var(--neon-cyan);"></span>
+        </div>
+
+        <!-- بوكس التنبيه العادي لرفض الموعد -->
+        <div class="notification-box" id="rejectAlert">
+            <i class="fa-solid fa-triangle-exclamation" style="color: var(--neon-pink);"></i> نعتذر منك يا زبوننا الكريم، لقد تم رفض موعد حجزك الأخير لعدم توفر أجهزة شاغرة حالياً.
+        </div>
+
+        <!-- بوكس تنبيه حظر الحجوزات الجزئي -->
+        <div class="notification-box" id="bookingBanAlert" style="background: rgba(255, 0, 0, 0.2); border-color: red;">
+            <i class="fa-solid fa-ban" style="color: red;"></i> نظام الحماية: لقد تم حظرك من نظام الحجوزات من قبل إدارة السنتر! يرجى مراجعة الكاونتر.
+        </div>
+
+        <div class="header-nav">
+            <div class="top-left-btns">
+                <button class="btn-top">English</button>
+            </div>
+            <div class="nav-links">
+                <span>قائمة الألعاب</span>
+                <span>الأجهزة المتاحة</span>
+                <span>الحجوزات والخدمة</span>
+                <span class="active">الرئيسية</span>
+            </div>
+            <div class="color-dots">
+                <div class="dot" style="background-color: var(--neon-pink);"></div>
+                <div class="dot" style="background-color: var(--neon-green);"></div>
+                <div class="dot" style="background-color: var(--neon-cyan);"></div>
+            </div>
+        </div>
+
+        <header class="main-header">
+            <img src="https://i.imgur.com/8K0S6gL.png" class="wolf-logo">
+            <h1>ألفا إكس جيمنج سنتر | ALPHA X GAMING CENTER</h1>
+            <p>أقوى سنتر جيمنج وحجوزات أجهزة احترافية بالكامل</p>
+        </header>
+
+        <!-- تم حذف أزرار الفيسبوك والواتساب والاتصال من هنا بالكامل -->
+
+        <section class="forms-grid">
+            
+            <!-- مكتب خدمة ومساعدة العملاء -->
+            <div class="form-box">
+                <div class="section-title"><i class="fa-solid fa-headset"></i> خدمة ومكتب مساعدة العملاء</div>
+                <form id="supportForm" onsubmit="sendSupportTicket(event)">
+                    <div class="form-group">
+                        <label>الاسم أو البريد الإلكتروني:</label>
+                        <input type="text" id="s-name" required placeholder="كيف يمكننا مناداتك؟">
+                    </div>
+                    <div class="form-group">
+                        <label>اكتب مشكلتك، طلبك، أو استفسارك هنا:</label>
+                        <textarea id="s-msg" required placeholder="اكتب رسالتك للمدير وسنرد عليك فوراً..."></textarea>
+                    </div>
+                    <button type="submit" id="supportSubmitBtn" class="btn-submit-support"><i class="fa-solid fa-comments"></i> إرسال طلب الدعم الفني</button>
+                </form>
+            </div>
+
+            <!-- نظام الحجز الفوري للأجهزة -->
+            <div class="form-box">
+                <div class="section-title"><i class="fa-solid fa-calendar-days"></i> نظام الحجز الفوري للأجهزة</div>
+                
+                <div class="cash-only-notice">
+                    <i class="fa-solid fa-money-bill-wave"></i> تنبيه هام جداً: لا يمكنك الدفع في الموقع الإلكتروني، الدفع داخل السنتر بالكاش فقط!
+                </div>
+
+                <form id="bookingForm" onsubmit="sendNewBooking(event)">
+                    <div class="form-group">
+                        <label>اسم الزبون المعظم:</label>
+                        <input type="text" id="b-name" required placeholder="أدخل اسمك الكريم">
+                    </div>
+                    <div class="form-group">
+                        <label>اختر جهازك أو المنطقة المخصصة:</label>
+                        <select id="b-zone">
+                            <option value="الجهاز بمواصفات عادية (i7 Gen 9)">الجهاز بمواصفات عادية (i7 Gen 9 + 16GB RAM)</option>
+                            <option value="جهاز الـ VIP (RTX 3050)">جهاز الـ VIP (RTX 3050 + 16GB RAM بسرعة)</option>
+                            <option value="جهاز الماستر (RTX 5060)">جهاز الماستر (RTX 5060 + 32GB RAM DDR5)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- الخيار الجديد: إدخال عدد الساعات بنفسك -->
+                    <div class="form-group">
+                        <label>حدد عدد ساعات اللعب التي ترغب بها بنفسك:</label>
+                        <input type="number" id="b-hours-custom" min="1" max="24" required placeholder="مثال: 3">
+                    </div>
+
+                    <button type="submit" id="bookingSubmitBtn" class="btn-submit-booking"><i class="fa-solid fa-pencil"></i> تأكيد حجز المقعد الآن</button>
+                </form>
+            </div>
+
+        </section>
+
+        <!-- مواصفات الأجهزة الفنية المتوفرة بالسنتر -->
+        <div class="section-header-row">
+            <h2><i class="fa-solid fa-desktop"></i> الأجهزة الفنية القوية المتوفرة بالسنتر</h2>
+        </div>
+        <section class="specs-grid">
+            <div class="spec-card">
+                <div class="spec-card-title">الجهاز بمواصفات عادية</div>
+                <div class="spec-item"><span class="spec-label">المعالج:</span><span class="spec-value">Core i7 (جيل تاسع)</span></div>
+                <div class="spec-item"><span class="spec-label">الرامات:</span><span class="spec-value">16GB DDR4</span></div>
+                <div class="spec-item"><span class="spec-label">النوع:</span><span class="spec-value">Standard PC</span></div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-card-title">جهاز الـ VIP</div>
+                <div class="spec-item"><span class="spec-label">كرت الشاشة:</span><span class="spec-value">RTX 3050</span></div>
+                <div class="spec-item"><span class="spec-label">الرامات:</span><span class="spec-value">16GB DDR4 (أحدث سرعة)</span></div>
+                <div class="spec-item"><span class="spec-label">الشاشة:</span><span class="spec-value">High Speed Refresh</span></div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-card-title">جهاز الماستر</div>
+                <div class="spec-item"><span class="spec-label">كرت الشاشة:</span><span class="spec-value">RTX 5060</span></div>
+                <div class="spec-item"><span class="spec-label">الرامات:</span><span class="spec-value">32GB DDR5</span></div>
+                <div class="spec-item"><span class="spec-label">الأداء:</span><span class="spec-value">Ultimate Beast Mode</span></div>
+            </div>
+        </section>
+
+        <!-- قائمة الألعاب المثبتة والمحدثة -->
+        <div class="section-header-row">
+            <h2><i class="fa-solid fa-gamepad"></i> قائمة ألعاب السنتر المثبتة والمحدثة</h2>
+        </div>
+        <section class="games-grid">
+            <div class="game-card">
+                <div class="game-title">Grand Theft Auto V</div>
+                <div class="game-desc">مثبتة بكامل سيرفرات الحياة الواقعية والتحديثات.</div>
+            </div>
+            <div class="game-card">
+                <div class="game-title">Resident Evil 4 Remake</div>
+                <div class="game-desc">أعلى جرافيكس رعب فريمات مستقرة.</div>
+            </div>
+            <div class="game-card">
+                <div class="game-title">EA SPORTS FC / FIFA</div>
+                <div class="game-desc">كاملة وجاهزة للتحديات وبطولات السنتر الكبرى.</div>
+            </div>
+        </section>
+
+        <!-- المحادثة المباشرة -->
+        <div class="section-header-row">
+            <h2><i class="fa-solid fa-headset"></i> المحادثة المباشرة وشات الدعم الفني مع الموظف</h2>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages" id="clientChatBox"></div>
+            <div class="chat-input-row">
+                <input type="text" id="cMsgInput" placeholder="اكتب رسالتك للموظف والآدمن هنا...">
+                <button onclick="sendClientMessage()" id="chatSendBtn">إرسال الطلب</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // دالة الفحص الأمني للحظر الشامل من فتح الموقع
+        function checkFullSiteBan() {
+            if (localStorage.getItem('ban_full_site') === 'true') {
+                document.getElementById("fullSiteBanScreen").style.display = "flex";
+                document.getElementById("mainSiteContent").style.display = "none";
+                document.body.style.background = "#000";
+                return true;
+            } else {
+                document.getElementById("fullSiteBanScreen").style.display = "none";
+                document.getElementById("mainSiteContent").style.display = "block";
+                return false;
+            }
+        }
+
+        function sendNewBooking(e) {
+            e.preventDefault();
+            if(checkFullSiteBan()) return;
+
+            if(localStorage.getItem('ban_booking') === 'true') {
+                alert("❌ عذراً، أنت محظور من إرسال الحجوزات حالياً!");
+                return;
+            }
+
+            const name = document.getElementById("b-name").value;
+            const zone = document.getElementById("b-zone").value;
+            const hours = document.getElementById("b-hours-custom").value + " ساعات"; // قراءة عدد الساعات المخصص
+
+            let bookings = localStorage.getItem('alpha_bookings') ? JSON.parse(localStorage.getItem('alpha_bookings')) : [];
+            bookings.push({ id: 'b_' + Date.now(), name, zone, hours, time: new Date().toLocaleTimeString('ar-JO') });
+            localStorage.setItem('alpha_bookings', JSON.stringify(bookings));
+
+            alert("🚀 تم إرسال حجزك بنجاح للمنظومة!");
+            localStorage.setItem('alpha_booking_status', 'pending');
+            document.getElementById("bookingForm").reset();
+        }
+
+        function sendSupportTicket(e) {
+            e.preventDefault();
+            if(checkFullSiteBan()) return;
+
+            if(localStorage.getItem('ban_chat') === 'true') {
+                alert("❌ عذراً، أنت محظور من كتابة الرسائل والدعم الفني!");
+                return;
+            }
+
+            const name = document.getElementById("s-name").value;
+            const msg = document.getElementById("s-msg").value;
+
+            let chatLog = localStorage.getItem('alpha_chat_log') ? JSON.parse(localStorage.getItem('alpha_chat_log')) : [];
+            chatLog.push({ sender: 'client', text: `[تذكرة دعم من ${name}]: ${msg}` });
+            localStorage.setItem('alpha_chat_log', JSON.stringify(chatLog));
+
+            alert("✉️ تم رفع مشكلتك إلى شات الدعم الفني بالأسفل!");
+            document.getElementById("supportForm").reset();
+            renderChat();
+        }
+
+        function sendClientMessage() {
+            if(checkFullSiteBan()) return;
+
+            if(localStorage.getItem('ban_chat') === 'true') {
+                alert("❌ أنت محظور من الكتابة (Muted)!");
+                return;
+            }
+
+            const input = document.getElementById("cMsgInput");
+            const text = input.value.trim();
+            if (!text) return;
+
+            let chatLog = localStorage.getItem('alpha_chat_log') ? JSON.parse(localStorage.getItem('alpha_chat_log')) : [];
+            chatLog.push({ sender: 'client', text: text });
+            localStorage.setItem('alpha_chat_log', JSON.stringify(chatLog));
+
+            input.value = "";
+            renderChat();
+        }
+
+        function renderChat() {
+            if(checkFullSiteBan()) return;
+
+            const isBookingBanned = localStorage.getItem('ban_booking') === 'true';
+            const isChatBanned = localStorage.getItem('ban_chat') === 'true';
+
+            document.getElementById("bookingBanAlert").style.display = isBookingBanned ? "block" : "none";
+            document.getElementById("bookingSubmitBtn").disabled = isBookingBanned;
+            
+            if(isChatBanned) {
+                document.getElementById("cMsgInput").placeholder = "🔒 تم حظرك من الكتابة بواسطة الإدارة...";
+                document.getElementById("cMsgInput").disabled = true;
+                document.getElementById("chatSendBtn").disabled = true;
+                document.getElementById("supportSubmitBtn").disabled = true;
+            } else {
+                document.getElementById("cMsgInput").placeholder = "اكتب رسالتك للموظف والآدمن هنا...";
+                document.getElementById("cMsgInput").disabled = false;
+                document.getElementById("chatSendBtn").disabled = false;
+                document.getElementById("supportSubmitBtn").disabled = false;
+            }
+
+            const box = document.getElementById("clientChatBox");
+            let chatLog = localStorage.getItem('alpha_chat_log') ? JSON.parse(localStorage.getItem('alpha_chat_log')) : [];
+            let html = "";
+            chatLog.forEach(m => {
+                const cls = m.sender === 'client' ? 'msg-client' : 'msg-admin';
+                const senderName = m.sender === 'client' ? 'أنت' : 'الموظف (الدعم الفني)';
+                html += `<div class="msg-line ${cls}"><strong>${senderName}:</strong> ${m.text}</div>`;
+            });
+            box.innerHTML = html;
+
+            const status = localStorage.getItem('alpha_booking_status');
+            const finalHours = localStorage.getItem('alpha_approved_hours') || '';
+            
+            if (status === 'approved') {
+                document.getElementById("approveAlert").style.display = "block";
+                document.getElementById("approvedHoursDetail").innerText = `(المدة المعتمدة: ${finalHours})`;
+                document.getElementById("rejectAlert").style.display = "none";
+            } else if (status === 'rejected') {
+                document.getElementById("approveAlert").style.display = "none";
+                document.getElementById("rejectAlert").style.display = "block";
+            } else {
+                document.getElementById("approveAlert").style.display = "none";
+                document.getElementById("rejectAlert").style.display = "none";
+            }
+        }
+
+        setInterval(renderChat, 1000);
+        window.onload = function() {
+            if(!checkFullSiteBan()) {
+                renderChat();
+            }
+        };
+    </script>
+</body>
+</html>
