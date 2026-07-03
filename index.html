@@ -1,120 +1,141 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>إهداء لخالتي الحبيبة</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: #d8a1a8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشغل وبوابة YouTube TV</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        /* حاوية الورود (الأنيميشن) */
-        .petals-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; }
-        .petal { position: absolute; background: white; opacity: 0.4; border-radius: 50% 0% 50% 50%; animation: fall linear infinite; }
-        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); } }
+    body {
+      min-height: 100vh;
+      background: linear-gradient(-45deg, #020617, #0f172a, #1e1b4b, #020617);
+      background-size: 400% 400%;
+      animation: gradientAnimation 12s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow: hidden;
+    }
 
-        /* البطاقة الزجاجية (Glassmorphism) */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 40px;
-            padding: 40px;
-            width: 320px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.5s ease;
-        }
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-        .time { font-size: 3.5rem; font-weight: 200; margin-bottom: 5px; }
-        .date { font-size: 1.1rem; opacity: 0.8; margin-bottom: 30px; }
+    /* الحاوية الزجاجية البلورية */
+    .tv-card {
+      width: 100%;
+      max-width: 600px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 28px;
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+      padding: 35px;
+      text-align: center;
+    }
 
-        input {
-            width: 80%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 20px;
-            border: none;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            text-align: center;
-        }
+    h1 {
+      color: #fff;
+      font-size: 24px;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
 
-        button {
-            background: #be123c;
-            color: white;
-            border: none;
-            padding: 10px 30px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+    p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
 
-        .wishes { text-align: right; margin-top: 20px; line-height: 1.8; font-size: 0.95rem; }
-    </style>
+    /* حاوية الأزرار التفاعلية */
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    /* زر تحميل الإضافة */
+    .btn-extension {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn-extension:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+    }
+
+    /* زر فتح واجهة التلفزيون */
+    .btn-tv {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    }
+
+    .btn-tv:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+    }
+
+    .footer-note {
+      margin-top: 30px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.35);
+      line-height: 1.5;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="petals-container" id="petals"></div>
+  <div class="tv-card">
+    <h1>بوابة تشغيل وضع YouTube TV 📺</h1>
+    <p>لتشغيل واجهة التلفزيون على الأجهزة الضعيفة بدون حظر، قم بتثبيت الإضافة المخصصة أولاً، ثم افتح الرابط المباشر.</p>
 
-    <div class="glass-card" id="main-card">
-        <div class="time" id="clock">--:--</div>
-        <div class="date" id="date">-- -- ----</div>
-        
-        <input type="text" id="pass" placeholder="اكتبي: احبك يا خالتي">
-        <br>
-        <button onclick="check()">فتح المفاجأة 🔓</button>
+    <div class="button-group">
+      <!-- زر الانتقال لتثبيت الإضافة -->
+      <a href="https://chromewebstore.google.com/detail/youtube-tv-on-pc/jldjbkccldgbegjpggphaeikombjmnkh?pli=1" target="_blank" class="btn btn-extension">
+        🧩 تحميل وتثبيت إضافة المتصفح
+      </a>
+
+      <!-- زر فتح YouTube TV في نافذة جديدة -->
+      <a href="https://www.youtube.com/tv#/" target="_blank" class="btn btn-tv">
+        🚀 فتح واجهة التلفزيون (في نافذة جديدة)
+      </a>
     </div>
 
-    <script>
-        // إعداد الوقت والتاريخ
-        function updateDisplay() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.getHours() + ":" + now.getMinutes().toString().padStart(2, '0');
-            const options = { weekday: 'long', month: 'long', day: 'numeric' };
-            document.getElementById('date').innerText = now.toLocaleDateString('ar-SA', options);
-        }
-        setInterval(updateDisplay, 1000);
-        updateDisplay();
+    <div class="footer-note">
+      * ميزة <code>target="_blank"</code> مدمجة بالأزرار لضمان فتح الروابط في نوافذ مستقلة ومنع حدوث أخطاء الاتصال المكسورة.<br>
+      * تأكد من تفعيل الإضافة بعد تحميلها لكي يقوم موقع يوتيوب بالتحويل التلقائي للواجهة الخفيفة.
+    </div>
+  </div>
 
-        // إنشاء الورود
-        const cont = document.getElementById('petals');
-        for (let i = 0; i < 30; i++) {
-            const p = document.createElement('div');
-            p.className = 'petal';
-            p.style.left = Math.random() * 100 + 'vw';
-            p.style.width = p.style.height = (Math.random() * 20 + 10) + 'px';
-            p.style.animationDuration = (Math.random() * 10 + 10) + 's';
-            cont.appendChild(p);
-        }
-
-        // التحقق
-        function check() {
-            if(document.getElementById('pass').value === "احبك يا خالتي") {
-                document.getElementById('main-card').innerHTML = `
-                    <h1>💝</h1>
-                    <div style="font-size:2rem; font-weight:bold;">∞</div>
-                    <p>معزتك بقلبي تتعدى كل الحدود! 🌹</p>
-                    <div class="wishes">
-                        🌸 <b>مكانتك:</b> أنتِ قطعة غالية ونادرة من قلبي.<br>
-                        🤲 <b>للصحة:</b> اللهم البس خالتي ثوب العافية.<br>
-                        ✨ <b>للراحة:</b> ربي املأ قلبها بالطمأنينة.<br>
-                        🕌 <b>للحفظ:</b> استودعتك الله مبسم خالتي وقلبها.<br>
-                        🎈 <b>أمنية:</b> عسى أيامك كلها مسرات.
-                    </div>
-                `;
-            } else { alert("حاولي مرة أخرى!"); }
-        }
-    </script>
 </body>
 </html>
