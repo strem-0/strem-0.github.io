@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حالة البث المباشر</title>
+    <title>مشغل البث المباشر</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -12,52 +12,56 @@
             margin: 0;
             padding: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
             box-sizing: border-box;
         }
-        .status-card {
-            text-align: center;
+        .header-container {
             width: 100%;
-            max-width: 550px;
-            padding: 40px 30px;
-            background-color: #1e293b;
-            border-radius: 16px;
+            max-width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #1e1b4b, #311042);
+            padding: 15px 20px;
+            border-radius: 12px;
             border: 1px solid #334155;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
         }
-        h1 { 
-            color: #f59e0b; 
-            font-size: 26px; 
-            margin-top: 0;
-            margin-bottom: 20px; 
+        .adblock-link {
+            background-color: #dc2626;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
         }
-        p { 
-            color: #f8fafc; 
-            font-size: 18px; 
-            line-height: 1.6; 
-            margin: 10px 0; 
+        .adblock-link:hover {
+            background-color: #b91c1c;
         }
-        .lang-en { 
-            direction: ltr; 
-            font-family: sans-serif; 
-            color: #94a3b8 !important; 
-            font-size: 16px !important; 
-            margin-top: 25px !important; 
-            border-top: 1px solid #334155; 
-            padding-top: 25px; 
+        .server-note {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #94a3b8;
+            font-size: 15px;
         }
     </style>
 </head>
 <body>
 
-    <div class="status-card">
-        <h1>لا توجد مباريات هامة</h1>
-        <p>لا توجد أي مباريات مهمة حالياً، سنعود عندما تبدأ مباراة قادمة مهمة.</p>
-        
-        <p class="lang-en">There are no important matches live right now. We will stand by and return when an important match begins.</p>
+    <div class="server-note">"سيتم توقيف البث المباشر بعد انتهاء المباريات ب 30 دقيقه بسبب توفير الوقت للسيرفر"</div>
+
+    <div class="header-container">
+        <h1 style="font-size: 18px; margin: 0;">📺 قناة البث الرئيسية</h1>
+        <a href="https://getadblock.com" target="_blank" class="adblock-link">🛡️ تحميل مانع الإعلانات AdBlock</a>
     </div>
+
+    <!-- كود المشغل الخاص بك الأصلي دون أي تعديل -->
+    <iframe allow="autoplay; encrypted-media" allowfullscreen="true" class="" height="620px" id="streamFrame" rameborder="0" src="https://live.bb6.dpdns.org/albaplayer/ch1/?serv=0" width="100%"></iframe>
 
 </body>
 </html>
